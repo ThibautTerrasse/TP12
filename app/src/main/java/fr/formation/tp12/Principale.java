@@ -1,8 +1,12 @@
 package fr.formation.tp12;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.List;
@@ -13,11 +17,20 @@ import fr.formation.tp12.database.modele.User;
 public class Principale extends AppCompatActivity {
 
     DataSource<User> dataSource;
+    private RecyclerView mRecyclerView;
+    FloatingActionButton boutonAjouter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principale);
+
+         boutonAjouter = (FloatingActionButton) findViewById(R.id.ajouterUser);
+
+       mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+        Intent intent = getIntent();
+        String nomUser= intent.getStringExtra("NomUser");
 
         // Create or retrieve the database
         try {
@@ -32,7 +45,7 @@ public class Principale extends AppCompatActivity {
         // Insert a new record
         // -------------------
         User user = new User();
-        user.setNom("Tintin");
+        user.setNom(nomUser);
         try {
             insertRecord(user);
         } catch (Exception e) {
@@ -41,12 +54,12 @@ public class Principale extends AppCompatActivity {
 
         // update that line
         // ----------------
-        try {
+      /* try {
             user.setNom("Bidochon");
             updateRecord(user);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         // Query that line
         // ---------------
@@ -55,7 +68,20 @@ public class Principale extends AppCompatActivity {
         // And then delete it:
         // -------------------
         //deleteRecord(user);
+
+        boutonAjouter.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick (View v){
+
+                Intent intent = new Intent(Principale.this, Secondaire.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     @Override
     protected void onResume() {
