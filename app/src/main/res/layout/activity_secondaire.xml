@@ -27,6 +27,7 @@
         tools:layout_editor_absoluteX="79dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp" />
+        android:layout_marginBottom="70dp"
+        android:onClick="sauvegarder"/>
 
 </RelativeLayout>
